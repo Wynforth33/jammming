@@ -16,35 +16,35 @@ class App extends React.Component {
         title: 'Tiny Monsters',
         artist: 'Puscifer',
         album: 'Conditions of My Parole'
-      },
-      {
-        id: 2,
-        title: 'Green Valley',
-        artist: 'Puscifer',
-        album: 'Conditions of My Parole'
-      },
-      {
-        id: 3,
-        title: 'Monsoons',
-        artist: 'Puscifer',
-        album: 'Conditions of My Parole'
       }],
-
-      playListName: 'Rocking Out',
-
-      playListTracks: [],
+      playListName: '',
+      playListTracks: []
     };
     this.searchSpotify = this.searchSpotify.bind(this);
     this.saveSpotify = this.saveSpotify.bind(this);
     this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlayListName = this.updatePlayListName.bind(this);
   }
 
   addTrack(track){
     if (this.state.playListTracks.find(savedTrack => savedTrack.id === track.id)){
       return;
     } else {
-      this.state.playListTracks.push(track);
+      let tracks = this.state.playListTracks;
+      tracks.push(track);
+      this.setState({playListTracks: tracks});
     }
+  }
+
+  removeTrack(track){
+    let tracks = this.state.playListTracks;
+    const removeTrack = tracks.filter(playListTrack => track.id !== playListTrack.id);
+    this.setState({playListTracks: removeTrack})
+  }
+
+  updatePlayListName(name){
+    this.setState({playListName: name});
   }
 
   // Handles The 'GET' interaction with the Spotify API;
@@ -112,15 +112,26 @@ class App extends React.Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
+
+
           <SearchBar searchSpotify={this.searchSpotify} />
+
+
           <div className="App-playlist">
+
+
             <SearchResults
               onAdd={this.addTrack}
               searchResults={this.state.searchResults} />
+
+
             <PlayList
+              onRemove={this.removeTrack}
               playListTracks={this.state.playListTracks}
-              playListName={this.state.playListName}
+              onNameChange={this.updatePlayListName}
               saveSpotify={this.saveSpotify} />
+
+
           </div>
         </div>
       </div>

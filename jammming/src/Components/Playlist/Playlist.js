@@ -7,17 +7,12 @@ import TrackList from '../TrackList/TrackList'; // <TrackList />
 class PlayList extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      playList: [],
-      playListName: ''
-    };
-
-    this.handlePlayListNameChange = this.handlePlayListNameChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
 
-  handlePlayListNameChange(e){
-    this.setState({playListName: e.target.value});
+  handleNameChange(e){
+    this.props.onNameChange(e.target.value);
   }
 
   handleSave(e){
@@ -29,9 +24,17 @@ class PlayList extends React.Component {
     return (
       <div className="Playlist">
         <input
-          onChange={this.handlePlayListNameChange}
+          onChange={this.handleNameChange}
           defaultValue='New Playlist' />
-        <TrackList tracks={this.props.playListTracks} />
+
+
+
+        <TrackList
+          onRemove={this.props.onRemove}
+          isRemoval={true}
+          tracks={this.props.playListTracks} />
+
+
         <a onClick={this.handleSave} className="Playlist-save">SAVE TO SPOTIFY</a>
       </div>
     );
