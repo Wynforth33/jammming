@@ -54,11 +54,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <SearchBar searchSpotify={this.searchSpotify} />
-        <div className="App-playlist">
-          <SearchResults searchResults={this.state.searchResults} />
-          <PlayList saveSpotify={this.saveSpotify} />
+      <div>
+        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <div className="App">
+          <SearchBar searchSpotify={this.searchSpotify} />
+          <div className="App-playlist">
+            <SearchResults searchResults={this.state.searchResults} />
+            <PlayList saveSpotify={this.saveSpotify} />
+          </div>
         </div>
       </div>
     );
