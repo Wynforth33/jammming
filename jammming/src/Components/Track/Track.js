@@ -10,26 +10,28 @@ class Track extends React.Component {
     this.removeTrack = this.removeTrack.bind(this);
   }
 
-  // If ['+'(action-element)] is clicked it adds Track to Playlist
+  // If ['+'(action-element)] is clicked it 'ADDS' '<This.Track />' to '<Playlist />'
   addTrack(){
     this.props.onAdd(this.props.track);
   }
 
-  // If ['-'(action-element)] is clicked it removes Track from Playlist
+  // If ['-'(action-element)] is clicked it 'REMOVES' '<This.Track />' from '<Playlist />'
   removeTrack(){
     this.props.onRemove(this.props.track);
   }
 
-  /*Checks truthiness of 'IsRemoval' if True, renders ['-'(action)];
+  /*Checks truthiness of 'IsRemoval'; if True, renders ['-'(action)];
   else, render ['+'(action)]*/
   renderAction(){
     if (this.props.isRemoval) {
-      return (<a
+      return (
+        <a
         onClick={this.removeTrack}
         className="Track-action">-</a>
       )
     } else {
-      return (<a
+      return (
+        <a
         onClick={this.addTrack}
         className="Track-action">+</a>
       )
