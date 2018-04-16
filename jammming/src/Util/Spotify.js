@@ -1,3 +1,4 @@
+'use strict';
 // Spotify Variables
 const clientID = '47d28e88bd77428d80980a437241ea30';
 const redirectUri = 'http://localhost:3000/';
@@ -210,4 +211,4 @@ const Spotify = {
   }
 }
 
-export default Spotify;
+export default Spotify; 
