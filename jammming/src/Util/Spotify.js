@@ -2,10 +2,11 @@
 // Spotify Variables
 const clientID = '47d28e88bd77428d80980a437241ea30';
 const redirectUri = 'http://localhost:3000/';
+const headers = { Authorization: `Bearer ${accessToken}` };
 let accessToken = '';
 let expiresIn = '';
 
-// GET Authorization Properties
+// GET Authorization Variable
 const authorizeURL = `https://accounts.spotify.com/authorize&redirect_uri=${redirectUri}&response_type=token?client_id=${clientID}`;
 /* Documentation(Authorize - Implicit Grant Flow)
 
@@ -71,7 +72,7 @@ Example: https://example.com/callback
 // /access_token=([^&]*)/
 // /expires_in=([^&]*)/
 
-// GET Search Results Properties
+// GET Search Results Variable
 const type = 'track';
 const limit = '10';
 const searchURL = `https://api.spotify.com/v1/search&type=${type}&limit=${limit}?p=`;
@@ -81,6 +82,8 @@ Example: https://api.spotify.com/v1/search?q=Muse
              &type=artists
              &market=US
              &limit=20
+
+  Must Supply "Authorization: Bearer {your access token}"
 
   Term: "?q=${Query Term Goes Here}"
   Type: "&type=${Type Goes Here}"
@@ -114,57 +117,138 @@ Example: https://api.spotify.com/v1/search?q=Muse
 Example Response Body for a Search GET. (Search q=Muse type=Artist limit=1)
 
 {
-"artists": {
-  "href": "https://api.spotify.com/v1/search?query=Muse&type=artist&market=US&offset=0&limit=1",
-  "items": [
-    {
-      "external_urls": {
-        "spotify": "https://open.spotify.com/artist/12Chz98pHFMPJEknJQMWvI"
-      },
-      "followers": {
-        "href": null,
-        "total": 3601221
-      },
-      "genres": [
-        "modern rock",
-        "permanent wave",
-        "piano rock",
-        "post-grunge",
-        "rock"
-      ],
-      "href": "https://api.spotify.com/v1/artists/12Chz98pHFMPJEknJQMWvI",
-      "id": "12Chz98pHFMPJEknJQMWvI",
-      "images": [
-        {
-          "height": 640,
-          "url": "https://i.scdn.co/image/19ac88c7aec1f68aa6e207aff29efa15d37336a7",
-          "width": 640
+  "tracks": {
+    "href": "https://api.spotify.com/v1/search?query=muse&type=track&market=US&offset=0&limit=1",
+    "items": [
+      {  <--- Beginning of First Track Object.
+        "album": {
+          "album_type": "single",
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/12Chz98pHFMPJEknJQMWvI"
+              },
+              "href": "https://api.spotify.com/v1/artists/12Chz98pHFMPJEknJQMWvI",
+              "id": "12Chz98pHFMPJEknJQMWvI",
+              "name": "Muse",
+              "type": "artist",
+              "uri": "spotify:artist:12Chz98pHFMPJEknJQMWvI"
+            }
+          ],
+          "available_markets": [...],
+          "external_urls": {
+            "spotify": "https://open.spotify.com/album/1BiugL7r9tzsQj2iBezCfW"
+          },
+          "href": "https://api.spotify.com/v1/albums/1BiugL7r9tzsQj2iBezCfW",
+          "id": "1BiugL7r9tzsQj2iBezCfW",
+          "images": [
+            {
+              "height": 640,
+              "url": "https://i.scdn.co/image/a14e216a2b2ed877717f371025fa6ddfc2a70883",
+              "width": 640
+            },
+            {
+              "height": 300,
+              "url": "https://i.scdn.co/image/067032e6d156d7d62cc5fbc9bdb5a08269e4979d",
+              "width": 300
+            },
+            {
+              "height": 64,
+              "url": "https://i.scdn.co/image/e3b3bbd404104ce9c5b4f19d9a29269f58004cbf",
+              "width": 64
+            }
+          ],
+          "name": "Thought Contagion",
+          "release_date": "2018-02-15",
+          "release_date_precision": "day",
+          "type": "album",
+          "uri": "spotify:album:1BiugL7r9tzsQj2iBezCfW"
         },
-        {
-          "height": 320,
-          "url": "https://i.scdn.co/image/7ad2128db73a2814a1a96498404a5d9aabb4c15c",
-          "width": 320
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/12Chz98pHFMPJEknJQMWvI"
+            },
+            "href": "https://api.spotify.com/v1/artists/12Chz98pHFMPJEknJQMWvI",
+            "id": "12Chz98pHFMPJEknJQMWvI",
+            "name": "Muse",
+            "type": "artist",
+            "uri": "spotify:artist:12Chz98pHFMPJEknJQMWvI"
+          }
+        ],
+        "available_markets": [...],
+        "disc_number": 1,
+        "duration_ms": 206098,
+        "explicit": false,
+        "external_ids": {
+          "isrc": "GBAHT1800045"
         },
-        {
-          "height": 160,
-          "url": "https://i.scdn.co/image/f026a6204c28907e43e833eaa1820f9b674295ca",
-          "width": 160
-        }
-      ],
-      "name": "Muse",
-      "popularity": 78,
-      "type": "artist",
-      "uri": "spotify:artist:12Chz98pHFMPJEknJQMWvI"
-    }
-  ],
-  "limit": 1,
-  "next": "https://api.spotify.com/v1/search?query=Muse&type=artist&market=US&offset=1&limit=1",
-  "offset": 0,
-  "previous": null,
-  "total": 186
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/35zrlBOjpfDPMcZzglWOuV"
+        },
+        "href": "https://api.spotify.com/v1/tracks/35zrlBOjpfDPMcZzglWOuV",
+        "id": "35zrlBOjpfDPMcZzglWOuV",
+        "name": "Thought Contagion",
+        "popularity": 75,
+        "preview_url": "https://p.scdn.co/mp3-preview/42cd14f044ee5b90bc2286106f4a36f7192855a6?cid=774b29d4f13844c495f206cafdad9c86",
+        "track_number": 1,
+        "type": "track",
+        "uri": "spotify:track:35zrlBOjpfDPMcZzglWOuV"
+      } <---- End of First Track Object.
+    ],
+    "limit": 1,
+    "next": "https://api.spotify.com/v1/search?query=muse&type=track&market=US&offset=1&limit=1",
+    "offset": 0,
+    "previous": null,
+    "total": 11331
+  }
 }
 */
 
+// GET User's Profile Variables
+let user_id = '';
+const profileURL = "https://api.spotify.com/v1/me";
+/* Documentation(User's Profile)
+Example: "https://api.spotify.com/v1/me"
+  Must Supply "Authorization: Bearer {your access token}"
+
+Example Body response
+{
+  "birthdate": "1937-06-01",
+  "country": "SE",
+  "display_name": "JM Wizzler",
+  "email": "email@example.com",
+  "external_urls": {
+    "spotify": "https://open.spotify.com/user/wizzler"
+  },
+  "followers" : {
+    "href" : null,
+    "total" : 3829
+  },
+  "href": "https://api.spotify.com/v1/users/wizzler",
+  "id": "wizzler",
+  "images": [
+    {
+      "height": null,
+      "url": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-frc3/t1.0-1/1970403_10152215092574354_1798272330_n.jpg",
+      "width": null
+    }
+  ],
+  "product": "premium",
+  "type": "user",
+  "uri": "spotify:user:wizzler"
+}
+*/
+
+// POST Playlist (2 Steps)
+  // POST Create Playlist on User's accounts
+let URIs = [];
+let playlist_id = '';
+const createListURL =
+  // POST Add tracks to Playlist on User's accounts
+const addTracksURL = `https://api.spotify.com/v1/users/${user_id}/playlists/${playlist_id}/tracks`;
+/* Documentation(Create Playlist)
+*/
 
 // Spotify API Object
 const Spotify = {
@@ -187,17 +271,15 @@ const Spotify = {
 
   search(term){
     return fetch(`${searchURL}${term}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
+      headers: headers
     }).then(response => {
       return response.json();
     }).then(jsonResponse => {
       if (jsonResponse.tracks) {
-        return jsonResponse.tracks.map(track => ({
+        return jsonResponse.tracks.items.map(track => ({
           id: track.id,
           name: track.name,
-          artist: track.artist[0].name,
+          artist: track.artist.items[0].name,
           album: track.album.name,
           uri: track.uri
         }));
@@ -207,7 +289,30 @@ const Spotify = {
     });
   },
 
-  save(list, name){
+  savePlayList(name, list){
+    if (name && list) {
+      return fetch(profileURL, {
+        headers: headers
+      }).then(response => {
+        return response.json();
+      }).then(jsonResponse => {
+        userID = jsonResponse.id;
+      }).then
+
+
+
+
+
+
+
+
+
+
+
+
+    } else {
+      return;
+    }
   }
 }
 

@@ -6,6 +6,8 @@ import SearchResults from '../SearchResults/SearchResults';
 import PlayList from '../PlayList/PlayList';
 import Spotify from '../../Util/Spotify';
 
+Spotify.getAccessToken();
+
 // Create <App /> ['React'(Component)]; Builds Application Front-end
 class App extends React.Component {
   constructor(props){
@@ -15,22 +17,24 @@ class App extends React.Component {
         id: 1,
         title: 'Tiny Monsters',
         artist: 'Puscifer',
-        album: 'Conditions of My Parole'
+        album: 'Conditions of My Parole',
+        uri: 'a'
       },
       {
         id: 2,
         title: 'Tiny Monsters',
         artist: 'Puscifer',
-        album: 'Conditions of My Parole'
+        album: 'Conditions of My Parole',
+        uri: 'b'
       }],
       playListName: '',
       playListTracks: []
     };
-    this.search = this.search.bind(this);
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlayListName = this.updatePlayListName.bind(this);
     this.savePlayList = this.savePlayList.bind(this);
+    this.search = this.search.bind(this);
   }
 
   addTrack(track){
@@ -45,8 +49,8 @@ class App extends React.Component {
 
   removeTrack(track){
     let tracks = this.state.playListTracks;
-    const removeTrack = tracks.filter(playListTrack => track.id !== playListTrack.id);
-    this.setState({playListTracks: removeTrack});
+    const newTracks = tracks.filter(playListTrack => track.id !== playListTrack.id);
+    this.setState({playListTracks: newTracks});
   }
 
   updatePlayListName(name){
@@ -54,8 +58,9 @@ class App extends React.Component {
   }
 
   savePlayList(){
-    const trackURIs = this.state.playListTracks.map(track => track.id);
-    console.log(trackURIs);
+    const listURIs = this.state.playListTracks.map(track => track.uri);
+    const listName = this.state.playListName;
+    Spotify.savePlayList(listName, listURIs);
   }
 
   search(term){
