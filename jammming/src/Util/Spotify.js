@@ -1,31 +1,31 @@
 const Spotify = {
-  clientID: '47d28e88bd77428d80980a437241ea30';
-  redirectUri: 'http://localhost:3000/';
   accessToken: '';
-  expiresIn: '';
 
   getAccessToken(){
-    const url = window.location.href;
-    const urlAccessToken = url.match(/access_token=([^&]*)/);
-    const urlExpires_in = url.match(/expires_in=([^&]*)/);
-    const authorizeURL = `https://accounts.spotify.com/authorize&redirect_uri=${Spotify.redirectUri}&response_type=token?client_id=${Spotify.clientID}`;
+    let expiresIn = '';
+    const clientID = '47d28e88bd77428d80980a437241ea30';
+    const redirectURI = 'http://localhost:3000/';
+    const currentURL = window.location.href;
+    const URLAccessToken = url.match(/access_token=([^&]*)/);
+    const tokenExpires_in = url.match(/expires_in=([^&]*)/);
+    const authorizeURL = `https://accounts.spotify.com/authorize&redirect_uri=${redirectURI}&response_type=token?client_id=${clientID}`;
     if (Spotify.accessToken){
       return Spotify.accessToken;
-    } else if (urlAccessToken && urlExpires_in){
-      Spotify.accessToken = urlAccessToken[0];
-      Spotify.expiresIn = urlExpires_in[0];
-      window.setTimeout(()=> Spotify.accessToken = '', Spotify.expiresIn * 1000);
+    } else if (URLAccessToken && tokenExpires_in){
+      Spotify.accessToken = URLAccessToken[0];
+      expiresIn = tokenExpires_in[0];
+      window.setTimeout(()=> Spotify.accessToken = '', expiresIn * 1000);
       window.history.pushState('Access Token', null, '/');
       return Spotify.accessToken;
     } else {
-      url = `${authorizeURL}`;
+      currentURL = `${authorizeURL}`;
     }
   },
 
   search(term){
     const searchURL = `https://api.spotify.com/v1/search&type=track&limit=25?p=`;
     return fetch(`${searchURL}${term}`, {
-      headers: {Authorization: `Bearer ${accessToken}`}
+      headers: {Authorization: `Bearer ${Spotify.accessToken}`}
     }).then(response => {
       return response.json();
     }).then(jsonResponse => {

@@ -1,10 +1,10 @@
 // Imports
 import React from 'react';
-import './PlayList.css';
+import './Playlist.css';
 import TrackList from '../TrackList/TrackList'; // <TrackList />
 
 // Create <PlayList /> ['React'(Component)]
-class PlayList extends React.Component {
+class Playlist extends React.Component {
   constructor(props){
     super(props);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -23,7 +23,7 @@ class PlayList extends React.Component {
         <TrackList
           onRemove={this.props.onRemove}
           isRemoval={true}
-          tracklist={this.props.playListTracks} />
+          tracklist={this.props.playlistTracks} />
         <a onClick={this.props.onSave} className="Playlist-save">SAVE TO SPOTIFY</a>
       </div>
     );
@@ -31,4 +31,4 @@ class PlayList extends React.Component {
 }
 
 // Exports
-export default PlayList; // <PlayList />
+export default Playlist; // <PlayList />
