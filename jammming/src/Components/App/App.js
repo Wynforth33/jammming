@@ -6,7 +6,7 @@ import SearchResults from '../SearchResults/SearchResults';
 import PlayList from '../PlayList/PlayList';
 import Spotify from '../../Util/Spotify';
 
-Spotify.getAccessToken();
+// Spotify.getAccessToken();
 
 // Create <App /> ['React'(Component)]; Builds Application Front-end
 class App extends React.Component {
@@ -61,6 +61,10 @@ class App extends React.Component {
     const listURIs = this.state.playListTracks.map(track => track.uri);
     const listName = this.state.playListName;
     Spotify.savePlayList(listName, listURIs);
+    this.setState({
+      playListName: 'New Playlist',
+      playListTracks: []
+    })
   }
 
   search(term){

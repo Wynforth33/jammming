@@ -2,7 +2,9 @@
 // Spotify Variables
 const clientID = '47d28e88bd77428d80980a437241ea30';
 const redirectUri = 'http://localhost:3000/';
-const headers = { Authorization: `Bearer ${accessToken}` };
+const headers = {
+  Authorization: `Bearer ${accessToken}`
+};
 let accessToken = '';
 let expiresIn = '';
 
@@ -243,11 +245,36 @@ Example Body response
 // POST Playlist (2 Steps)
   // POST Create Playlist on User's accounts
 let URIs = [];
-let playlist_id = '';
-const createListURL =
+let user_id = '';
+const createListURL = `https://api.spotify.com/v1/users/${user_id}/playlists`;
+
   // POST Add tracks to Playlist on User's accounts
+let playlist_id = '';
 const addTracksURL = `https://api.spotify.com/v1/users/${user_id}/playlists/${playlist_id}/tracks`;
-/* Documentation(Create Playlist)
+/* Documentation(Create Playlist/Add Tracks)
+// Create Playlist
+https://beta.developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/
+
+Example: "https://api.spotify.com/v1/users/${user_id}/playlists"
+             {
+              Authorization: Bearer {your access token},
+              Content-Type: application/json,
+              body: {
+                      name: nameOfNewPlaylist
+                    }
+             }
+
+Add Tracks
+https://beta.developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
+
+Example: "https://api.spotify.com/v1/users/${user_id}/playlists/${playlist_id}/tracks"
+            {
+              Authorization: Bearer {your access token},
+              Accept: application/json,
+              body: {
+                      uris: arrayOfURIs
+                    }
+            }
 */
 
 // Spotify API Object
@@ -296,24 +323,34 @@ const Spotify = {
       }).then(response => {
         return response.json();
       }).then(jsonResponse => {
-        userID = jsonResponse.id;
-      }).then
-
-
-
-
-
-
-
-
-
-
-
-
+        return user_id = jsonResponse.id;
+      }).then(()=> {
+        return fetch(createListURL, {
+          headers: headers,
+          Content-type: application/json,
+          method: 'POST',
+          body: JSON.stringify({
+            name: name
+          })
+        }).then(response => {
+          return response.json();
+        }).then(jsonResponse => {
+          return playlist_id = jsonResponse.id;
+        });
+      }).then(()=> {
+        return fetch(addTracksURL, {
+          headers: headers,
+          Accept: application/json,
+          method: 'POST',
+          body: JSON.stringify({
+            uris: list
+          })
+        });
+      });
     } else {
       return;
     }
   }
 }
 
-export default Spotify; 
+export default Spotify;
