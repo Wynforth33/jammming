@@ -1,31 +1,32 @@
-const Spotify = {
-  accessToken: '';
+let accessToken = '';
+const clientID = '47d28e88bd77428d80980a437241ea30';
+const redirectURI = 'http://localhost:3000/';
 
+const Spotify = {
   getAccessToken(){
     let expiresIn = '';
-    const clientID = '47d28e88bd77428d80980a437241ea30';
-    const redirectURI = 'http://localhost:3000/';
-    const currentURL = window.location.href;
-    const URLAccessToken = url.match(/access_token=([^&]*)/);
-    const tokenExpires_in = url.match(/expires_in=([^&]*)/);
-    const authorizeURL = `https://accounts.spotify.com/authorize&redirect_uri=${redirectURI}&response_type=token?client_id=${clientID}`;
-    if (Spotify.accessToken){
-      return Spotify.accessToken;
+    let currentURL = window.location.href;
+    const URLAccessToken = currentURL.match(/access_token=([^&]*)/);
+    const tokenExpires_in = currentURL.match(/expires_in=([^&]*)/);
+    const authorizeURL = `https://accounts.spotify.com/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=token`;
+    if (accessToken){
+      return accessToken;
     } else if (URLAccessToken && tokenExpires_in){
-      Spotify.accessToken = URLAccessToken[0];
+      accessToken = URLAccessToken[0];
       expiresIn = tokenExpires_in[0];
-      window.setTimeout(()=> Spotify.accessToken = '', expiresIn * 1000);
+      window.setTimeout(()=> accessToken = '', expiresIn * 1000);
       window.history.pushState('Access Token', null, '/');
-      return Spotify.accessToken;
+      return accessToken;
     } else {
       currentURL = `${authorizeURL}`;
     }
+    console.log(accessToken);
   },
 
   search(term){
     const searchURL = `https://api.spotify.com/v1/search&type=track&limit=25?p=`;
     return fetch(`${searchURL}${term}`, {
-      headers: {Authorization: `Bearer ${Spotify.accessToken}`}
+      headers: {Authorization: `Bearer ${accessToken}`}
     }).then(response => {
       return response.json();
     }).then(jsonResponse => {
@@ -44,6 +45,7 @@ const Spotify = {
   },
 
   savePlayList(name, list){
+    Spotify.getAccessToken();
     let user_id = '';
     let playlist_id = '';
     const profileURL = "https://api.spotify.com/v1/me";
@@ -51,7 +53,7 @@ const Spotify = {
     const addTracksURL = `https://api.spotify.com/v1/users/${user_id}/playlists/${playlist_id}/tracks`;
     if (name && list) {
       return fetch(profileURL, {
-        headers: {Authorization: `Bearer ${Spotify.accessToken}`}
+        headers: {Authorization: `Bearer ${accessToken}`}
       }).then(response => {
         return response.json();
       }).then(jsonResponse => {
@@ -60,8 +62,7 @@ const Spotify = {
         return fetch(createListURL, {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${Spotify.accessToken}`,
-            Content-Type: application/json
+            Authorization: `Bearer ${accessToken}`
           },
           body: JSON.stringify({name: name})
         }).then(response => {
@@ -73,8 +74,7 @@ const Spotify = {
         return fetch(addTracksURL, {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${Spotify.accessToken}`,
-            Accept: application/json
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({uris: list})
         });

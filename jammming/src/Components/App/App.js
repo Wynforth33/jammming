@@ -3,10 +3,8 @@ import React from 'react';
 import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
-import Playlist from '../Playlist/Playlist';
 import Spotify from '../../Util/Spotify';
-
-// Spotify.getAccessToken();
+import Playlist from '../Playlist/Playlist';
 
 // Create <App /> ['React'(Component)]; Builds Application Front-end
 class App extends React.Component {
@@ -73,6 +71,7 @@ class App extends React.Component {
   }
 
   render() {
+    Spotify.getAccessToken();
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
