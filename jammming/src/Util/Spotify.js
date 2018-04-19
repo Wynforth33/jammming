@@ -1,5 +1,5 @@
 const clientID = '47d28e88bd77428d80980a437241ea30';
-const redirectURI = 'http://localhost:3000/';
+const redirectURI = 'http://wynforth.surge.sh';
 let accessToken
 let expiresIn
 
