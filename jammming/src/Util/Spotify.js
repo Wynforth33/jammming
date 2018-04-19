@@ -48,8 +48,8 @@ const Spotify = {
 
   savePlaylist(name, list){
     this.getAccessToken();
-    let user_id = '';
-    let playlist_id = '';
+    let user_id
+    let playlist_id
     if (name && list) {
       return fetch('https://api.spotify.com/v1/me', {
         headers: {Authorization: `Bearer ${accessToken}`}
