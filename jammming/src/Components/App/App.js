@@ -45,11 +45,20 @@ class App extends React.Component {
   savePlaylist(){
     const trackList = this.state.playlistTracks.map(track => track.uri);
     const listName = this.state.playlistName;
+<<<<<<< HEAD
     Spotify.savePlayList(listName, trackList);
     this.setState({
         playlistName: 'New Playlist',
         playlistTracks: []
     })
+=======
+    Spotify.savePlaylist(listName, trackList).then(()=>{
+      this.setState({
+        playlistName: 'New Playlist',
+        playlistTracks: []
+      });
+    });
+>>>>>>> 32c66d24549eacf3c0cf2d427e05ecf7fcf14fd2
   }
 
   search(term){
@@ -66,8 +75,14 @@ class App extends React.Component {
         <div className="App">
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
-            <Playlist playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist} />
+            <SearchResults
+                searchResults={this.state.searchResults}
+                onAdd={this.addTrack} />
+            <Playlist
+                playlistTracks={this.state.playlistTracks}
+                onRemove={this.removeTrack}
+                onNameChange={this.updatePlaylistName}
+                onSave={this.savePlaylist} />
           </div>
         </div>
       </div>

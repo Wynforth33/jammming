@@ -1,5 +1,5 @@
 const clientID = '47d28e88bd77428d80980a437241ea30';
-const redirectURI = 'http://localhost:3000/';
+const redirectURI = 'http://wynforth.surge.sh';
 let accessToken
 let expiresIn
 
@@ -29,7 +29,11 @@ const Spotify = {
       if (response.ok) {
         return response.json();
       }
+<<<<<<< HEAD
       throw new Error('Request failed!');
+=======
+      throw new Error('Request Failed!');
+>>>>>>> 32c66d24549eacf3c0cf2d427e05ecf7fcf14fd2
     }, networkError => console.log(networkError.message)
     ).then(jsonResponse => {
       if (jsonResponse.tracks) {
@@ -46,10 +50,17 @@ const Spotify = {
     });
   },
 
+<<<<<<< HEAD
   savePlayList(name, list){
     this.getAccessToken();
     let user_id = '';
     let playlist_id = '';
+=======
+  savePlaylist(name, list){
+    this.getAccessToken();
+    let user_id
+    let playlist_id
+>>>>>>> 32c66d24549eacf3c0cf2d427e05ecf7fcf14fd2
     if (name && list) {
       return fetch('https://api.spotify.com/v1/me', {
         headers: {Authorization: `Bearer ${accessToken}`}
@@ -57,10 +68,16 @@ const Spotify = {
         if (response.ok) {
           return response.json();
         }
+<<<<<<< HEAD
         throw new Error('Request failed!');
       }, networkError => console.log(networkError.message)
       ).then(jsonResponse => {
         console.log(jsonResponse);
+=======
+        throw new Error('Request Failed!');
+      }, networkError => console.log(networkError.message)
+      ).then(jsonResponse => {
+>>>>>>> 32c66d24549eacf3c0cf2d427e05ecf7fcf14fd2
         return user_id = jsonResponse.id;
       }).then(()=> {
         return fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
@@ -71,10 +88,16 @@ const Spotify = {
           if (response.ok) {
             return response.json();
           }
+<<<<<<< HEAD
           throw new Error('Request failed!');
         }, networkError => console.log(networkError.message)
         ).then(jsonResponse => {
           console.log(jsonResponse);
+=======
+          throw new Error('Request Failed!');
+        }, networkError => console.log(networkError.message)
+        ).then(jsonResponse => {
+>>>>>>> 32c66d24549eacf3c0cf2d427e05ecf7fcf14fd2
           return playlist_id = jsonResponse.id;
         });
       }).then(()=> {
@@ -86,10 +109,16 @@ const Spotify = {
           if (response.ok) {
             return response.json();
           }
+<<<<<<< HEAD
           throw new Error('Request failed!');
         }, networkError => console.log(networkError.message)
         ).then(jsonResponse => {
           console.log(jsonResponse);
+=======
+          throw new Error('Request Failed!');
+        }, networkError => console.log(networkError.message)
+        ).then(jsonResponse => {
+>>>>>>> 32c66d24549eacf3c0cf2d427e05ecf7fcf14fd2
         });
       });
     } else {
