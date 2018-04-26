@@ -1,3 +1,10 @@
+Jammming - Capstone Project (Part 1) 
+Author: James K. Edwards III
+
+Code Acadamey Pro Intensive: Build Web applications from Scratch
+
+Unit 3: Project: Jammming 
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
