@@ -43,8 +43,18 @@ class App extends React.Component {
   }
 
   savePlaylist(){
-    const trackList = this.state.playlistTracks.map(track => track.uri);
     const listName = this.state.playlistName;
+    const trackList = this.state.playlistTracks.map(track => track.uri);
+    // Checks if 'this.state.playlistTracks' is empty; if empty, alerts user, ends method.
+    if (trackList.length === 0) {
+      alert('No Tracks Selected, Add Some Tracks and Try Again!');
+      return;
+    // If Tracks Present: Checks if 'this.state.playlistName' is default; if default, alerts user, ends method.
+    } else if (listName === 'New Playlist') {
+      alert('Please Create A Unique Name!');
+      return;
+    }
+    // If neither above are true, executes remainder of method. Significant, as sending a request with zero tracks will return a 400 error; and, as Spotify allows for multiple playlists with the same name, this prevents User from accidentally using the defaul playlist name; effectively requiring the user to put in anything else.
     Spotify.savePlaylist(listName, trackList);
     this.setState({
       playlistName: 'New Playlist',
