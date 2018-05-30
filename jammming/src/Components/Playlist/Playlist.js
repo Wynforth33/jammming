@@ -14,10 +14,21 @@ class Playlist extends React.Component {
     this.props.onNameChange(e.target.value);
   }
 
+  handleSave(){
+    this.props.onSave();
+  }
+
+  handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      this.handleSave();
+    }
+  }
+
   render() {
     return (
       <div className="Playlist">
         <input
+            onKeyPress={this.handleEnter}
             value={this.props.playlistName}
             onChange={this.handleNameChange}
              />
@@ -25,7 +36,7 @@ class Playlist extends React.Component {
             onRemove={this.props.onRemove}
             isRemoval={true}
             tracklist={this.props.playlistTracks} />
-        <a onClick={this.props.onSave} className="Playlist-save">SAVE TO SPOTIFY</a>
+        <a onClick={this.handleSave} className="Playlist-save">SAVE TO SPOTIFY</a>
       </div>
     );
   }

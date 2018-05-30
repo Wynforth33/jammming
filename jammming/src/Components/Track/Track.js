@@ -20,6 +20,16 @@ class Track extends React.Component {
     this.props.onRemove(this.props.track);
   }
 
+  /* Checks if Track has a sample preview, by checking if the value saved to this.props.track.preview_url is equal to null or not. */
+  renderSampleAction(){
+    if (this.props.track.sample) {
+      return <a href={this.props.track.sample} target="_blank"><i className="fa fa-play-circle"></i></a>;
+    } else {
+      return <i className="fa fa-ban sample"></i>
+    }
+  }
+
+
   /*Checks truthiness of 'IsRemoval'; if True, renders ['-'(action)];
   else, render ['+'(action)]*/
   renderAction(){
@@ -46,6 +56,7 @@ class Track extends React.Component {
           <h3>{trackProps.title}</h3>
           <p>{trackProps.artist} | {trackProps.album}</p>
         </div>
+        {this.renderSampleAction()}
         {this.renderAction()}
       </div>
     )

@@ -30,13 +30,20 @@ const Spotify = {
     }, networkError => console.log(networkError.message)
     ).then(jsonResponse => {
       if (!jsonResponse.tracks) {return [];}
-      return jsonResponse.tracks.items.map(track => ({
+      const results = jsonResponse.tracks.items.map(track => ({
         id: track.id,
         title: track.name,
         artist: track.artists[0].name,
         album: track.album.name,
-        uri: track.uri
+        uri: track.uri,
+        image: track.album.images[0].url,
+        sample: track.preview_url
       }));
+      const randomTrack = results[Math.floor(Math.random()*results.length)];
+      const randomTrackArt = randomTrack.image;
+      document.getElementById('root').style.backgroundImage = `url('${randomTrackArt}')`;
+      console.log(results);
+      return results;
     });
   },
 
