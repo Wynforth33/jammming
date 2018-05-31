@@ -1,6 +1,5 @@
 const clientID = '47d28e88bd77428d80980a437241ea30';
-// const redirectURI = 'http://wynforth.surge.sh'; //Surge
-const redirectURI = 'http://localhost:3000'; //Localhost
+const redirectURI = 'http://WynJamm.surge.sh/'; //Surge
 let accessToken, expiresIn;
 
 const Spotify = {
